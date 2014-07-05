@@ -4,7 +4,7 @@ import copy
 
 class potencia():
     
-    def __init__(self,n,AA,xx):
+    def __init__(self,n,AA,xx,rho=0.15):
         print n
         aa = copy.deepcopy(AA)
         x = copy.deepcopy(xx)
@@ -15,7 +15,7 @@ class potencia():
                 B[i].append(float(1.0))
         #print dot(1.0-rho,aa)
         #print dot(1.0-rho,aa)+dot(rho*(float(1)/float(n)),B)
-        A = dot(0.85,aa)+dot(0.15*(float(1)/float(n)),B)
+        A = dot(1.0-rho,aa)+dot(rho*(float(1)/float(n)),B)
         #print A
         self.txt = self.Potencia(A,x,1e-5,200)
     

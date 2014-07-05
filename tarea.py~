@@ -16,6 +16,7 @@ matrizA = []
 matrizX = []
 n = 0
 myDesp = DoubleVar()
+myRho = DoubleVar()
 
 def mabout():
     texto = 'PAGE RANK\n\nProyecto Final\nAnalisis Numerico\n2014-1'
@@ -32,13 +33,16 @@ def getMatrixfromTextX():
     os.system("gedit vectorX.txt")
 
 def mPotencia():
+    myR = myRho.get()
+    if myR == 0.0:
+        myR = 0.15
     global n
     global matrizA
     global matrizX
     readMatrizA()
     readMatrizX()
     #print myR
-    b = potencia(n,matrizA,matrizX)
+    b = potencia(n,matrizA,matrizX, myR)
     txt = b.getmyTxt()
     f=open("potencia.txt",'w+')
     f.write(txt)
@@ -52,7 +56,10 @@ def mPotenciaInversa():
     global matrizX
     readMatrizA()
     readMatrizX()
-    b = potencia_inversa(n,matrizA, matrizX)
+    myR = myRho.get()
+    if myR == 0.0:
+        myR = 0.15
+    b = potencia_inversa(n,matrizA, matrizX, myR)
     txt = b.getmyTxt()
     f=open("potenciaInversa.txt",'w+')
     f.write(txt)
@@ -67,8 +74,11 @@ def mPotenciaInversaDesplazada():
     global matrizX
     readMatrizA()
     readMatrizX()
+    myR = myRho.get()
     myD = myDesp.get()
-    b = potencia_inversa_desplazada(n,matrizA, matrizX, myD)
+    if myR == 0.0:
+        myR = 0.15
+    b = potencia_inversa_desplazada(n,matrizA, matrizX, myD, myR)
     txt = b.getmyTxt()
     f=open("PotenciaInversaDesplazada.txt",'w+')
     f.write(txt)

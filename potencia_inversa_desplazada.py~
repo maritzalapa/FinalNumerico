@@ -2,10 +2,10 @@ from math import *
 from numpy import *
 import copy
 
-class potencia():
+class potencia_inversa_desplazada():
     
-    def __init__(self,n,AA,xx):
-        print n
+    def __init__(self,n,AA,xx,desp=1.5,rho=0.15):
+        print desp, n
         aa = copy.deepcopy(AA)
         x = copy.deepcopy(xx)
         B = []
@@ -13,24 +13,25 @@ class potencia():
             B.append([])
             for j in range(n):
                 B[i].append(float(1.0))
-        #print dot(1.0-rho,aa)
-        #print dot(1.0-rho,aa)+dot(rho*(float(1)/float(n)),B)
-        A = dot(0.85,aa)+dot(0.15*(float(1)/float(n)),B)
-        #print A
-        self.txt = self.Potencia(A,x,1e-5,200)
+        A = dot(1.0-rho,aa)+dot(rho*(float(1)/float(n)),B)
+        print A
+        self.txt = self.PotenciaInversaDesplazada(A,x,1e-5,200,desp)
     
     def getmyTxt(self):
         return self.txt
-      
-    def Potencia(self,A,x,tol,NMAX):
+  
+    def PotenciaInversaDesplazada(self,A,x,tol,NMAX,lam):
 	    k=1
 	    res=0.0	
 	    text='k\t lamda\t\t\t\tx\n'
+	    for i in range(len(A)):
+		    A[i][i]-=lam
 	
+	    A= linalg.inv(A) ###inversa de la matriz A
 	    y=dot(A,x) 					##siguiente potencia
 	    l_ant=linalg.norm(y, inf)	
 	    x = [i/l_ant for i in y]
-	
+		
 	    while k<NMAX :
 		    y=dot(A,x) 					##siguiente potencia
 		    l=linalg.norm(y, inf)
@@ -38,7 +39,6 @@ class potencia():
 
 		    text+="%d\t%.6f\t"%(k,l)
 		    text+= str(x) +"\n"
-		
 		    if ( fabs(l-l_ant) <tol ):		
 			    print "fin\n"
 			    break
@@ -49,10 +49,9 @@ class potencia():
 			    text+="ERROR: DIVISION ENTRE CERO!!"	
 			    break
 	    if k!=NMAX:
-	        text+= "\n\nY la solucion final es:\nEigenvalor = "+str(l)+"\nEigenvector = "+str(x)+"\n\n"
+	        text+= "\n\nY la solucion final es:\nEigenValor = "+str(l)+"\nEigenvector = "+str(x)+"\n\n"
 	    if k==NMAX:
-		    text+="ERROR: FIN DE ITERACIONES  :/"
+		    text+="ERROS: FIN DE ITERACIONES  :/"
 	    return text
-	    
 	    
 	    

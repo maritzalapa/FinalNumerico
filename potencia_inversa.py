@@ -5,7 +5,7 @@ import copy
 
 class potencia_inversa():
 
-    def __init__(self,n,AA,xx,rho=0.15):
+    def __init__(self,n,AA,xx):
         aa = copy.deepcopy(AA)
         x = copy.deepcopy(xx)
         B = []
@@ -13,7 +13,7 @@ class potencia_inversa():
             B.append([])
             for j in range(n):
                 B[i].append(float(1.0))
-        A = dot(1.0-rho,aa)+dot(rho*(float(1)/float(n)),B)
+        A = dot(0.85,aa)+dot(0.15*(float(1)/float(n)),B)
         self.txt = self.PotenciaInversa(A,x,1e-5,200)
     
     def getmyTxt(self):
